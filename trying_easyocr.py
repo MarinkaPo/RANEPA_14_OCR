@@ -64,7 +64,7 @@ if uploaded_img is not None:
 
 # ---------------------Choosing language---------------------
 languages = ['ar','az','be','bg','ch_sim','che','cs','de','en','es','fr','hi','hu','it','ja','la','pl','ru','tr','uk','vi']
-chose_lang = st.multiselect('Выберите язык для распознавания', languages)
+chose_lang = st.multiselect('**Выберите язык для распознавания:**', languages)
 
 if not chose_lang or not uploaded_img:
     st.write('Обработка приостановлена: загрузите изображение и/или выберите язык для распознавания.')
