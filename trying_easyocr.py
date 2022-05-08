@@ -56,7 +56,7 @@ expander_bar.markdown("""\n**Оптическое распознавание с�
 """)
 
 # ---------------------Uploading img---------------------
-uploaded_img = st.file_uploader("Загрузите изображение с текстом ниже:", type=['jpg', 'jpeg', 'png'])
+uploaded_img = st.file_uploader("Ниже загрузите изображение с текстом:", type=['jpg', 'jpeg', 'png'])
 if uploaded_img is not None: 
     st.image(uploaded_img, use_column_width='auto', caption=f'Загруженное изображение {uploaded_img.name}')
     file_bytes = np.asarray(bytearray(uploaded_img.read()), dtype=np.uint8) # переводим в numpy.ndarray
@@ -64,7 +64,7 @@ if uploaded_img is not None:
 
 # ---------------------Choosing language---------------------
 languages = ['ar','az','be','bg','ch_sim','che','cs','de','en','es','fr','hi','hu','it','ja','la','pl','ru','tr','uk','vi']
-chose_lang = st.multiselect('**Выберите язык для распознавания:**', languages)
+chose_lang = st.multiselect('Выберите язык для распознавания:', languages)
 
 if not chose_lang or not uploaded_img:
     st.write('Обработка приостановлена: загрузите изображение и/или выберите язык для распознавания.')
