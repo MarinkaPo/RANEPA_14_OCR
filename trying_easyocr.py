@@ -9,11 +9,12 @@ from PIL import ImageDraw
 
 # ---------------------Work function---------------------
 def draw_boxes(image, bounds, color='yellow', width=2):
+    image = Image.open(image) # дописала, чтобы загруженное img перевести в "путь" к нему (str)
     draw = ImageDraw.Draw(image)
     for bound in bounds:
         p0, p1, p2, p3 = bound[0]
         draw.line([*p0, *p1, *p2, *p3, *p0], fill=color, width=width)
-    return image
+    return st.image(image)
 
 
 # ---------------------Header---------------------
@@ -26,12 +27,12 @@ st.image(img_ocr, use_column_width='auto') # width=450
 st.write("""
 Приложение *"Text Recognition from photo"* демонстрирует, как можно получать текстовую информацию с изображений или печатных носителей.
 * **Используемые библиотеки:** [Streamlit](https://docs.streamlit.io/library/get-started), [EasyOCR](https://github.com/JaidedAI/EasyOCR), [cv2](https://opencv.org/), [Numpy](https://numpy.org/doc/stable/reference/index.html).
-* **Полезные ссылки:** [Наиболее распространённые варианты решений OCR](https://habr.com/ru/post/573030/), [о системе EasyOCR](https://www.jaided.ai/easyocr/tutorial/), [Документация EasyOCR](https://www.jaided.ai/easyocr/documentation/)
+* **Полезные ссылки:** [Наиболее распространённые варианты OCR](https://habr.com/ru/post/573030/), [о системе EasyOCR](https://www.jaided.ai/easyocr/tutorial/), [Документация EasyOCR](https://www.jaided.ai/easyocr/documentation/)
 \nДанные подготовили сотрудники ЛИА РАНХиГС.
 """)
 
-# img_pipeline = Image.open('Pipeline_for_Streamlit.png') #
-# st.image(img_pipeline, use_column_width='auto', caption='Общий пайплайн для приложения') #width=450
+img_pipeline = Image.open('Pipeline_for_OCR.png') #
+st.image(img_pipeline, use_column_width='auto', caption='Общий пайплайн для приложения') #width=450
 
 expander_bar = st.expander("Что такое OCR и как это рабоает?")
 expander_bar.markdown("""\n**Оптическое распознавание символов** (англ. optical character recognition, OCR) — 
@@ -56,38 +57,14 @@ expander_bar.markdown("""\n**Оптическое распознавание с�
 
 # ---------------------Uploading img---------------------
 uploaded_img = st.file_uploader("Загрузите изображение с текстом ниже:", type=['jpg', 'jpeg', 'png'])
-# uploaded_img_cache = None
-if uploaded_img is not None: # and uploaded_img != uploaded_img_cache:
-    uploaded_img_cache = uploaded_img
+if uploaded_img is not None: 
     st.image(uploaded_img, use_column_width='auto', caption=f'Загруженное изображение {uploaded_img.name}')
     file_bytes = np.asarray(bytearray(uploaded_img.read()), dtype=np.uint8) # переводим в numpy.ndarray
     bytearray_img = cv2.imdecode(file_bytes, 1) # переводим в numpy.ndarray
 
-    # im = Image.open(uploaded_img)
-
 # ---------------------Choosing language---------------------
-chose_lang = st.multiselect('Выберите язык для распознавания', 
-        ['ar', 
-        'az',
-        'be',
-        'bg',
-        'ch_sim',
-        'che',
-        'cs',
-        'de',
-        'en',
-        'es',
-        'fr',
-        'hi',
-        'hu',
-        'it',
-        'ja',
-        'la',
-        'pl',
-        'ru',
-        'tr',
-        'uk',
-        'vi'])
+languages = ['ar','az','be','bg','ch_sim','che','cs','de','en','es','fr','hi','hu','it','ja','la','pl','ru','tr','uk','vi']
+chose_lang = st.multiselect('Выберите язык для распознавания', languages)
 
 if not chose_lang or not uploaded_img:
     st.write('Обработка приостановлена: загрузите изображение и/или выберите язык для распознавания.')
@@ -95,26 +72,10 @@ else:
     reader = easyocr.Reader(chose_lang)
     bounds = reader.readtext(bytearray_img) # работает c bytearray_img
 
-
-    # iii = Image.open(uploaded_img)
-    # iii_array = np.array(iii) # if you want to pass it to OpenCV
-
-    # def draw_boxes(image, bounds, color='yellow', width=2):
-    # immm = Image.open(uploaded_img)
-    # st.image(immm)
-
-    # imggg = cv2.imread(uploaded_img)
-
-    # def draw_boxes(image, bounds, color='yellow', width=2):
-    # draw = ImageDraw.Draw(image)
-    # for bound in bounds:
-    #     p0, p1, p2, p3 = bound[0]
-    #     draw.line([*p0, *p1, *p2, *p3, *p0], fill=color, width=width)
-    # return image
-
-    # draw_boxes(uploaded_img.name, bounds)
+    draw_boxes(uploaded_img, bounds) # работает c im
     result = reader.readtext(bytearray_img, detail = 0, paragraph=True)
-    st.markdown('Распознанный текст:')
+    
+    st.markdown('**Распознанный текст:**')
     result
     
 
