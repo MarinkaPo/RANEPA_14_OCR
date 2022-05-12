@@ -18,7 +18,7 @@ def draw_boxes(image, bounds, color='yellow', width=2):
 
 # ---------------------Header---------------------
 st.markdown('''<h1 style='text-align: right; color: black;'
-            >Text Recognition from photo</h1>''', 
+            >Оптическое распознавание символов</h1>''', 
             unsafe_allow_html=True)
 st.markdown('''<h3 style='text-align: right; color: grey;'
             >Text Recognition from photo</h13>''', 
