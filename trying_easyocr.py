@@ -16,11 +16,14 @@ def draw_boxes(image, bounds, color='yellow', width=2):
         draw.line([*p0, *p1, *p2, *p3, *p0], fill=color, width=width)
     return st.image(image)
 
-
 # ---------------------Header---------------------
-st.markdown('''<h1 style='text-align: right; color: grey;'
+st.markdown('''<h1 style='text-align: right; color: black;'
             >Text Recognition from photo</h1>''', 
             unsafe_allow_html=True)
+st.markdown('''<h3 style='text-align: right; color: grey;'
+            >Text Recognition from photo</h13>''', 
+            unsafe_allow_html=True)
+
 img_ocr = Image.open('ocr.jpeg') #
 st.image(img_ocr, use_column_width='auto') # width=450
 
@@ -30,12 +33,32 @@ st.write("""
 * **Полезные ссылки:** [Наиболее распространённые варианты OCR](https://habr.com/ru/post/573030/), [о системе EasyOCR](https://www.jaided.ai/easyocr/tutorial/), [Документация EasyOCR](https://www.jaided.ai/easyocr/documentation/)
 \nДанные подготовили сотрудники ЛИА РАНХиГС.
 """)
-
+#-------------------------Pipeline description-------------------------
 img_pipeline = Image.open('Pipeline_for_OCR.png') #
 st.image(img_pipeline, use_column_width='auto', caption='Общий пайплайн для приложения') #width=450
 
-expander_bar = st.expander("Что такое OCR и как это рабоает?")
-expander_bar.markdown("""\n**Оптическое распознавание символов** (англ. optical character recognition, OCR) — 
+pipeline_bar = st.expander("Пайплайн микросервиса:")
+pipeline_bar.markdown(
+    """
+    \n**Этапы:**
+    \n1. Выбор библиотеки OCR:
+    \n*EasyOCR* была выбрана по следующим причинам:
+    \n* открытый исходный код
+    \n* простота использования 
+    \n* доступная и удобная документация
+    \n* широко применяется для задач OCR
+    \n* высокая точность распознавания текста (до 100%, в зависимости от качества фото/скана)
+    \n2. Написание функций обработки изображения;
+    \n3. Загрузка изображения с текстом;
+    \n4. Выбор языка для определения;
+    \n5. Обработка изображения;
+    \n6. Проверка результата и корректировки;
+    \n7. Оформление микросервиса Streamlit, выгрузка на сервер.
+    """)
+
+#-------------------------Info-------------------------
+info_bar = st.expander("Что такое OCR и как это рабоает?")
+info_bar.markdown("""\n**Оптическое распознавание символов** (англ. optical character recognition, OCR) — 
 механический или электронный перевод изображений рукописного, машинописного или печатного текста в текстовые данные.
 \n**Обработка данных при помощи OCR может применяться для самых различных задач:**
 
