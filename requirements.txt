@@ -1,5 +1,5 @@
 pip==22.0.4
-streamlit==1.8.1 # ok
+streamlit==1.9.0. # 1.8.1 устарела
 pillow==8.4.0
 easyocr==1.4.2
 
@@ -10,6 +10,7 @@ seaborn==0.11.2 # ok
 
 base58==2.1.1
 click==8
+protobuf~=3.19.0 # без этого не работает из-за обновления protobuf в гугле
 
 torch==1.10.1
 torchvision==0.11.2
