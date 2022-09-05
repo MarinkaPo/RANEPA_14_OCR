@@ -191,7 +191,7 @@ st.markdown('''Полный же список распознаваемых EasyO
 2. учитывайте также и особенности изображения: старославянскую рукопись библиотека не распознает, это задача для нейронных сетей более сложной архитектуры
 3. при загрузке больших документов, время обработки существенно увеличится
 4. неверный выбор языка для определения также может быть причиной ошибок''')
-uploaded_img = st.file_uploader("Ниже загрузите изображение с текстом:", type=['jpg', 'jpeg', 'png', 'pdf'])
+uploaded_img = st.file_uploader("Ниже загрузите изображение с текстом:", type=['jpg', 'jpeg', 'png'])
 if uploaded_img is not None: 
     st.image(uploaded_img, use_column_width='auto', caption=f'Загруженное изображение {uploaded_img.name}')
     file_bytes = np.asarray(bytearray(uploaded_img.read()), dtype=np.uint8) # переводим в numpy.ndarray
